@@ -40,6 +40,21 @@ public class Tic_Tac_Toe_Interface extends javax.swing.JFrame {
         
     }
     
+    //Checks if all fields are full
+    private int getFieldsLength(){
+       String fLength = "";
+        Component[] comps = jPanel1.getComponents();
+      for(Component comp : comps)
+      {
+          if(comp instanceof JButton)
+          {
+            JButton button = (JButton)comp;
+            fLength += button.getText();
+          }
+      }
+      return fLength.length();
+    }
+    
     private void takeTurn(){
         if(!gameWon){
                 if((x_or_o % 2) == 0){
@@ -51,6 +66,8 @@ public class Tic_Tac_Toe_Interface extends javax.swing.JFrame {
                 }
         }
     }
+    
+   
     
     public ActionListener createAction(JButton button)
     {
@@ -86,12 +103,26 @@ public class Tic_Tac_Toe_Interface extends javax.swing.JFrame {
       {
           if(comp instanceof JButton)
           {
-          JButton button = (JButton)comp;
-          button.addActionListener(createAction(button));
+            JButton button = (JButton)comp;
+            button.addActionListener(createAction(button));
           }
       }  
            
        
+    }
+    
+     private void winHighligh(JButton b1, JButton b2, JButton b3){
+        gameWon = true;
+        jLabel3.setText(b1.getText());
+        jLabel1.setText("Wins!");
+        jButtonReplay.setBackground(Color.GREEN);
+        b1.setBackground(Color.GREEN);
+        b2.setBackground(Color.GREEN);
+        b3.setBackground(Color.GREEN);
+        
+        b1.setForeground(Color.WHITE);
+        b2.setForeground(Color.WHITE);
+        b3.setForeground(Color.WHITE);
     }
     
     public void getTheWinner(){
@@ -99,65 +130,68 @@ public class Tic_Tac_Toe_Interface extends javax.swing.JFrame {
         //[ ][ ][ ] Win condition
         //[ ][ ][ ]
         if(!jButton1.getText().equals("")&&jButton1.getText().equals(jButton2.getText())&&jButton1.getText().equals(jButton3.getText())){
-            gameWon = true;
-            jLabel3.setText(jButton1.getText());
-            jLabel1.setText("Wins!");
+            winHighligh(jButton1, jButton2, jButton3);
+            
         }
         //[ ][ ][ ]
         //[*][*][*] Win condition
         //[ ][ ][ ]
         if(!jButton4.getText().equals("")&&jButton4.getText().equals(jButton5.getText())&&jButton4.getText().equals(jButton6.getText())){
-            gameWon = true;
-            jLabel3.setText(jButton4.getText());
-            jLabel1.setText("Wins!");
+            winHighligh(jButton4, jButton5, jButton6);
+
         }
         //[ ][ ][ ]
         //[ ][ ][ ] Win condition
         //[*][*][*]
         if(!jButton7.getText().equals("")&&jButton7.getText().equals(jButton8.getText())&&jButton7.getText().equals(jButton9.getText())){
-            gameWon = true;
-            jLabel3.setText(jButton7.getText());
-            jLabel1.setText("Wins!");
+
+            winHighligh(jButton7, jButton8, jButton9);
+
         }
         //[*][ ][ ]
         //[ ][*][ ] Win condition
         //[ ][ ][*]
         if(!jButton1.getText().equals("")&&jButton1.getText().equals(jButton5.getText())&&jButton1.getText().equals(jButton9.getText())){
-            gameWon = true;
-            jLabel3.setText(jButton1.getText());
-            jLabel1.setText("Wins!");
+
+            winHighligh(jButton1, jButton5, jButton9);
+
         }
         //[ ][ ][*]
         //[ ][*][ ] Win condition
         //[*][ ][ ]
         if(!jButton3.getText().equals("")&&jButton3.getText().equals(jButton5.getText())&&jButton3.getText().equals(jButton7.getText())){
-            gameWon = true;
-            jLabel3.setText(jButton3.getText());
-            jLabel1.setText("Wins!");
+
+            winHighligh(jButton3, jButton5, jButton7);
+
         }
         //[*][ ][ ]
         //[*][ ][ ] Win condition
         //[*][ ][ ]
         if(!jButton1.getText().equals("")&&jButton1.getText().equals(jButton4.getText())&&jButton1.getText().equals(jButton7.getText())){
-            gameWon = true;
-            jLabel3.setText(jButton1.getText());
-            jLabel1.setText("Wins!");
+
+            winHighligh(jButton1, jButton4, jButton7);
+
         }
         //[ ][*][ ]
         //[ ][*][ ] Win condition
         //[ ][*][ ]
         if(!jButton2.getText().equals("")&&jButton2.getText().equals(jButton5.getText())&&jButton2.getText().equals(jButton8.getText())){
-            gameWon = true;
-            jLabel3.setText(jButton2.getText());
-            jLabel1.setText("Wins!");
+            winHighligh(jButton2, jButton5, jButton8);
+
         }
         //[ ][ ][*]
         //[ ][ ][*] Win condition
         //[ ][ ][*]
-        if(!jButton1.getText().equals("")&&jButton1.getText().equals(jButton4.getText())&&jButton1.getText().equals(jButton7.getText())){
-            gameWon = true;
-            jLabel3.setText(jButton1.getText());
-            jLabel1.setText("Wins!");
+        if(!jButton3.getText().equals("")&&jButton3.getText().equals(jButton6.getText())&&jButton3.getText().equals(jButton9.getText())){
+
+            winHighligh(jButton3, jButton6, jButton9);
+
+        }
+        
+        if(getFieldsLength() == 9){
+            jLabel1.setText("Draw");
+            jButtonReplay.setBackground(Color.GREEN);
+            jLabel3.setVisible(false);
         }
     }
     
@@ -185,7 +219,7 @@ public class Tic_Tac_Toe_Interface extends javax.swing.JFrame {
         jButton7 = new javax.swing.JButton();
         jButton8 = new javax.swing.JButton();
         jButton9 = new javax.swing.JButton();
-        jButton10 = new javax.swing.JButton();
+        jButtonReplay = new javax.swing.JButton();
         jButton11 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
 
@@ -230,30 +264,39 @@ public class Tic_Tac_Toe_Interface extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(0, 0, 0));
 
+        jButton1.setBackground(new java.awt.Color(255, 255, 255));
         jButton1.setFont(new java.awt.Font("Nirmala UI", 1, 40)); // NOI18N
         jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
+        jButton2.setBackground(new java.awt.Color(255, 255, 255));
         jButton2.setFont(new java.awt.Font("Nirmala UI", 1, 40)); // NOI18N
         jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
+        jButton3.setBackground(new java.awt.Color(255, 255, 255));
         jButton3.setFont(new java.awt.Font("Nirmala UI", 1, 40)); // NOI18N
         jButton3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
+        jButton4.setBackground(new java.awt.Color(255, 255, 255));
         jButton4.setFont(new java.awt.Font("Nirmala UI", 1, 40)); // NOI18N
         jButton4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
+        jButton5.setBackground(new java.awt.Color(255, 255, 255));
         jButton5.setFont(new java.awt.Font("Nirmala UI", 1, 40)); // NOI18N
         jButton5.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
+        jButton6.setBackground(new java.awt.Color(255, 255, 255));
         jButton6.setFont(new java.awt.Font("Nirmala UI", 1, 40)); // NOI18N
         jButton6.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
+        jButton7.setBackground(new java.awt.Color(255, 255, 255));
         jButton7.setFont(new java.awt.Font("Nirmala UI", 1, 40)); // NOI18N
         jButton7.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
+        jButton8.setBackground(new java.awt.Color(255, 255, 255));
         jButton8.setFont(new java.awt.Font("Nirmala UI", 1, 40)); // NOI18N
         jButton8.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
+        jButton9.setBackground(new java.awt.Color(255, 255, 255));
         jButton9.setFont(new java.awt.Font("Nirmala UI", 1, 40)); // NOI18N
         jButton9.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
@@ -305,7 +348,15 @@ public class Tic_Tac_Toe_Interface extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jButton10.setText("Replay");
+        jButtonReplay.setBackground(new java.awt.Color(255, 255, 255));
+        jButtonReplay.setText("Replay");
+        jButtonReplay.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonReplayActionPerformed(evt);
+            }
+        });
+
+        jButton11.setBackground(new java.awt.Color(255, 255, 255));
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -328,7 +379,7 @@ public class Tic_Tac_Toe_Interface extends javax.swing.JFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton10, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
+                    .addComponent(jButtonReplay, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
                     .addComponent(jButton11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
             .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -341,7 +392,7 @@ public class Tic_Tac_Toe_Interface extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButtonReplay, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton11, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
@@ -350,6 +401,25 @@ public class Tic_Tac_Toe_Interface extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButtonReplayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonReplayActionPerformed
+      gameWon = false;
+      jLabel3.setVisible(true);
+      jButtonReplay.setBackground(Color.WHITE);
+      Component[] comps = jPanel1.getComponents();
+      for(Component comp : comps)
+      {
+          if(comp instanceof JButton)
+          {
+            JButton button = (JButton)comp;
+            button.setText("");
+            button.setBackground(Color.WHITE);
+            jLabel1.setText("Turn");
+            decideTurn();
+            takeTurn();
+          }
+      }
+    }//GEN-LAST:event_jButtonReplayActionPerformed
 
     /**
      * @param args the command line arguments
@@ -388,7 +458,6 @@ public class Tic_Tac_Toe_Interface extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton11;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
@@ -398,6 +467,7 @@ public class Tic_Tac_Toe_Interface extends javax.swing.JFrame {
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
+    private javax.swing.JButton jButtonReplay;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
